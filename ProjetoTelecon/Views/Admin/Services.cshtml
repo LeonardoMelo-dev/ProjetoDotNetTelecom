@@ -1,0 +1,186 @@
+﻿@{
+    ViewData["Title"] = "Serviços";
+
+    var id_data = ViewContext.RouteData.Values["id"];
+}
+
+    <style>
+        .ck-editor__editable {
+            min-height: 400px;
+        }
+
+        .bi-file-earmark-arrow-down
+        {
+            width: 250px;
+            height: 180px;
+            display: block;
+            line-height: 180px;
+            font-size: 103px;
+            text-align: center;
+            margin: 0 0 0 auto;
+            color: #0d6efd;
+        }
+    </style>
+
+    <section class="admin servicos">
+        <div class="container">
+            <div class="row">
+                @if (id_data != null)
+                {
+                    <div class="col-sm-12 mt-5">
+                        <form class="row justify-content-between" method="POST" action="/admin/servicesadd" enctype="multipart/form-data">
+                            <input type="hidden" name="ServiceId" class="form-control" value="@ViewBag.Item.ServiceId">
+
+
+                            <div class="col-sm-9 form-group mb-4">
+                                <label class="mb-2">Nome do Serviço <strong class="text-danger align-top">*</strong></label>
+                                <input type="text" name="Name" class="form-control" value="@ViewBag.Item.Name" maxlength="255">
+                            </div>
+
+                            <div class="col-sm-3 form-group mb-4">
+                                <label class="mb-2">Valor do Serviço <strong class="text-danger align-top">*</strong></label>
+                                <input type="number" step="0.50" name="Price" class="form-control" value="@ViewBag.Item.Price">
+                            </div>
+
+
+                            <div class="col-sm-3 form-group mb-4">
+                                <label class="mb-2">Franquia</label>
+                                <input type="number" name="Franchise" class="form-control" value="@ViewBag.Item.Franchise">
+                            </div>
+                            
+                            <div class="col-sm-3 form-group mb-4">
+                                <label class="mb-2">Franquia Extra</label>
+                                <input type="number" name="ExtraFranchise" class="form-control" value="@ViewBag.Item.ExtraFranchise">
+                            </div>
+
+                             <div class="col-sm-12 form-group mb-4 mt-4 bg-light p-3 rounded-3">
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="mb-2">Imagem</label>
+                                        <input type="file" name="Image" class="form-control">
+                                    </div>
+
+                                    <div class="col-sm-4 form-group text-end @(String.IsNullOrEmpty(ViewBag.Item.Image) ? " d-none" : "" )">
+                                        <img src="~/upload/@ViewBag.Item.Image" class="rounded-3 border border-primary" style="max-height: 200px; max-width: 200px; width: 100%; object-fit: cover;    margin-top: 32px;" />
+                                        <div class="radio">
+                                            <label style="width: 200px; text-align: left">
+                                                <input type="checkbox" name="RemoveImage" value="true">
+                                                Remover imagem
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <small>Sugestão de dimensão: 1392 x 549</small>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 p-0 mt-5"></div>
+
+
+                            <div class="col-12 col-md-6 form-group mb-4">
+                                <label class="mb-2">Tipo do Serviço</label>
+                                <input type="text" name="ServiceType" class="form-control" value="@ViewBag.Item.ServiceType" maxlength="255">
+                            </div>
+
+                            <div class="col-sm-8 form-group mb-4 d-flex flex-wrap">
+                                <label class="mb-2 w-100">Status</label>
+                                <div class="radio me-3">
+                                    <label>
+                                        <input type="radio" name="Active" id="optionsRadios1" value="true" @(ViewBag.Item.Active == true ? "checked" : "")>
+                                        Ativo
+                                    </label>
+                                </div>
+
+                                <div class="radio me-3">
+                                    <label>
+                                        <input type="radio" name="Active" id="optionsRadios2" value="false" @(ViewBag.Item.Active == false ? "checked" : "")>
+                                        Inativo
+                                    </label>
+                                </div>
+                            </div>
+       
+
+                            <div class="col-sm-12 form-group mb-4 text-end mt-5">
+                                <a asp-controller="admin" asp-action="services" asp-route-id="" class="btn btn-danger me-3">
+                                    <i class="bi bi-x-lg me-2"></i> Cancelar
+                                </a>
+
+                                <button type="submit" class="btn btn-success"><i class="bi bi-save me-2"></i> Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                }
+
+                @if (id_data == null)
+                {
+
+                    <div class="col-sm-12 mb-3 mt-5">
+                        <a class="float-end btn btn-sm btn-success" asp-controller="admin" asp-action="services" asp-route-id="0">
+                            + Novo
+                        </a>
+
+                    </div>
+
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Serviço</th>
+                                    <th>Preço</th>
+                                    <th>Status</th>
+                                    <th><!-- Operações --></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in ViewBag.List)
+                                {
+                                    <tr>
+                                        <td>@item.ServiceId</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Price</td>
+                                        <td>
+                                            @if (item.Active == true)
+                                            {
+                                                <span class="text-success">Ativo</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-danger">Inativo</span>
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            <a asp-controller="admin" asp-action="services" asp-route-id="@item.ServiceId" class="btn btn-sm btn-primary me-2">
+                                                Editar
+                                            </a>
+                                            <a asp-controller="admin" asp-action="servicesdelete" asp-route-id="@item.ServiceId" class="btn btn-sm btn-danger" onclick="return confirm('Essa operação não poderá ser desfeita')">
+                                                Excluir
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+        //CkEditor
+        ClassicEditor
+            .create(document.querySelector('#texto-editor'), {
+                toolbar: ['heading', , '|', 'bold', '|', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', '|', 'alignment:left', 'alignment:right', 'alignment:center', 'alignment:justify'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>

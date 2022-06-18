@@ -10,15 +10,15 @@ namespace ProjetoTelecon.Data
 
         }
 
-        public DbSet<Servico> Servico { get; set; }
-        public DbSet<Pacote> Pacote { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Services> Services { get; set; }
+        public DbSet<Packets> Packets { get; set; }
+        public DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Servico>().ToTable("Servico").HasKey("ServicoId");
-            modelBuilder.Entity<Pacote>().ToTable("Pacote").HasKey("PacoteId");
-            modelBuilder.Entity<Usuario>().ToTable("Usuario").HasKey("UsuarioId");
+            modelBuilder.Entity<Services>().ToTable("Services").HasKey("ServiceId");
+            modelBuilder.Entity<Packets>().ToTable("Packets").HasKey("PacketId");
+            modelBuilder.Entity<Users>().ToTable("Users").HasKey("UserId");
 
         }
     }
