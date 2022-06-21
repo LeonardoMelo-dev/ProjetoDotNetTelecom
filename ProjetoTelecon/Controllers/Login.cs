@@ -5,6 +5,7 @@ using ProjetoTelecon.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using ProjetoTelecon.Services_;
 
 namespace ProjetoTelecon.Controllers
 {
@@ -19,13 +20,15 @@ namespace ProjetoTelecon.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Post(Users u)
+        [Route("login/post")]
+        public async Task<ActionResult<dynamic>> AutenticateAsync(Users u)
         {
 
-            var user = _context.Users.Where(w => w.Email == u.Email).SingleOrDefault();
+            var user = _context.Users.Where(w => w.Email == u.Email && w.Password == u.Password).SingleOrDefault();
 
-            if (user != null && user.Password == u.Password)
+            if (user != null)
             {
                 string userType;
 
@@ -37,31 +40,15 @@ namespace ProjetoTelecon.Controllers
                 {
                     userType = "Comum";
                 }
-                
-                var claims = new List<Claim>
-                {
-                    new Claim("Name", user.Name),
-                    new Claim("Email", user.Email),
-                    new Claim("UserType", userType),
-                    new Claim("UserId", user.UserId.ToString(), ClaimValueTypes.Integer)
-                };
 
-                var userIdentity = new ClaimsIdentity(claims, "Login");
-                ClaimsPrincipal claimPrincipal = new ClaimsPrincipal(userIdentity);
+                var token = TokenService.GenerateToken(user);
 
-                var authenticationProperties = new AuthenticationProperties
-                {
-                    AllowRefresh = true,
-                    ExpiresUtc = DateTime.Now.ToLocalTime().AddHours(8),
-                    IsPersistent = true
-                };
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimPrincipal, authenticationProperties);
-                
+                //Oculta a senha
+                user.Password = "";
 
                 TempData["Msg"] = "Bem vindo! Você acaba de entrar na plataforma";
                 TempData["MsgType"] = "success";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new {token = token});
             }
             else
             {

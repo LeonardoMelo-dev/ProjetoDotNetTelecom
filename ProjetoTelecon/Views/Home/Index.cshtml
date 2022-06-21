@@ -2,9 +2,39 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="Container">
+    <div class="text-center">
+        <img src="~/upload/Banner_Inicio.jpg" class="img-fluid" alt="Responsive image" style="margin-top: 20px">
+        <h1 class="display-4" style="margin-top: 20px">Bem vindo(a) @ViewBag.LogedUser.Name</h1>
 
-    <h1>Bem vindo(a) Leonardo Melo</h1>
+        <br><br>
+
+        <h6>Para um país com as dimensões do Brasil, as telecomunicações são de fundamental importância. Considerando-se ainda que, no momento atual, os fluxos de comunicação a longa distância são responsáveis por uma enorme circulação de informações, concluindo-se que país algum do globo pode prescindir de um eficiente sistema de serviços de transmissão de dados.</h6>
+
+        <h6>No Brasil, o setor esteve monopolizado pela Telebrás entre 1972 e 1998, quando ocorreu sua privatização, num processo muito polêmico. Afinal, o modelo seguido pelo país não restringiu a participação estrangeira nem tampouco fixou um limite de ações por comprador. Ou seja, a forma como se deu a venda pode resultar na substituição do monopólio estatal pelo privado.</h6>
+
+        <hr>
+
+    </div>
+
+   
+    <h3 class="text-center">Conheça nossos pacotes</h3>
+    <div class="row">
+
+        @foreach(var item in ViewBag.Packets)
+        {
+            <div class="col-sm-3 mt-5">
+            <div class="card" style="width: 18rem;">
+              <img src="~/upload/@item.Image" class="card-img-top" alt="..." style="height: 220px; object-fit: cover;">
+              <div class="card-body">
+                <h5 class="card-title" style="min-height: 50px; ">@item.Name</h5>
+                <a href="#" class="btn btn-primary">Veja os Serviços</a>
+              </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <br><br>
+
 </div>

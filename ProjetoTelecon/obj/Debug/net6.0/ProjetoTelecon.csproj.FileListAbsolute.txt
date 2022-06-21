@@ -266,3 +266,4 @@ C:\ProjetosDotNetCoreMVC\ProjetoDotNetTelecom\ProjetoTelecon\obj\Debug\net6.0\re
 C:\ProjetosDotNetCoreMVC\ProjetoDotNetTelecom\ProjetoTelecon\obj\Debug\net6.0\ProjetoTelecon.pdb
 C:\ProjetosDotNetCoreMVC\ProjetoDotNetTelecom\ProjetoTelecon\obj\Debug\net6.0\ProjetoTelecon.genruntimeconfig.cache
 C:\ProjetosDotNetCoreMVC\ProjetoDotNetTelecom\ProjetoTelecon\obj\Debug\net6.0\ref\ProjetoTelecon.dll
+C:\ProjetosDotNetCoreMVC\ProjetoDotNetTelecom\ProjetoTelecon\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

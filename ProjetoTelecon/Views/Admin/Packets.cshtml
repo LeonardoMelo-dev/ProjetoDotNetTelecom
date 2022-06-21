@@ -39,7 +39,7 @@
 
                             <div class="col-sm-3 form-group mb-4">
                                 <label class="mb-2">Valor do Pacotes <strong class="text-danger align-top">*</strong></label>
-                                <input type="number" step="0.50" name="Price" class="form-control" value="@ViewBag.Item.Price">
+                                <input type="number"  step="0.50" name="Price" class="form-control" disabled value="@ViewBag.Item.Price">
                             </div>
 
                             
@@ -141,6 +141,9 @@
                                             </a>
                                             <a asp-controller="admin" asp-action="Packetsdelete" asp-route-id="@item.PacketId" class="btn btn-sm btn-danger" onclick="return confirm('Essa operação não poderá ser desfeita')">
                                                 Excluir
+                                            </a>
+                                            <a asp-controller="admin" asp-action="Packets_Services" asp-route-id="@item.PacketId" class="btn btn-sm btn-success">
+                                                Serviços
                                             </a>
                                         </td>
                                     </tr>

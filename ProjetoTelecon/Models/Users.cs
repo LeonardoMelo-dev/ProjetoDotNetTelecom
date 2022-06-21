@@ -1,11 +1,14 @@
-﻿namespace ProjetoTelecon.Models
+﻿using System.Collections.ObjectModel;
+
+namespace ProjetoTelecon.Models
 {
     public class Users
     {
         public Users()
         {
-            Packets_Users = new HashSet<Packets_Users>();
+            Packets_Users = new Collection<Packets_Users>();
         }
+
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -19,6 +22,6 @@
         public DateTime? ModificationDate { get; set; }
         public bool IsAdmin { get; set; }
         public bool Active { get; set; }
-        public virtual IEnumerable<Packets_Users> Packets_Users { get; set; }
+        public virtual ICollection<Packets_Users> Packets_Users { get; set; }
     }
 }

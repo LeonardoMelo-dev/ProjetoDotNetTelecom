@@ -23,6 +23,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUGFja2V0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/ProjetosDotNetCoreMVC/ProjetoDotNetTelecom/ProjetoTelecon/Views/Admin/Packets_Services.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUGFja2V0c19TZXJ2aWNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/ProjetosDotNetCoreMVC/ProjetoDotNetTelecom/ProjetoTelecon/Views/Admin/Packets_Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUGFja2V0c19Vc2Vycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/ProjetosDotNetCoreMVC/ProjetoDotNetTelecom/ProjetoTelecon/Views/Admin/Services.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2VydmljZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

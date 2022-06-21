@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Packets_Services";
+
+   var id_data = ViewContext.RouteData.Values["id"];
+}
+
+
+
+<section class="admin servicos">
+        <div class="container">
+            <form class="row justify-content-between m-4" method="POST" action="/admin/Packets_Servicesadd" enctype="multipart/form-data">
+                <input type="hidden" name="PacketId" class="form-control" value="@id_data">
+                <div class="row">
+                    <select class="form-select mb-4" aria-label="Default select example" name="ServiceIdA">
+                      <option selected>Selecione o primeiro serviço</option>
+                      @foreach(var service in ViewBag.Services)
+                      {
+                          <option value="@service.ServiceId">@service.Name</option>
+                      }
+                    </select>
+
+                    <select class="form-select mb-4" aria-label="Default select example" name="ServiceIdB">
+                     <option selected>Selecione o segundo serviço</option>
+                      @foreach(var service in ViewBag.Services)
+                      {
+                          <option value="@service.ServiceId">@service.Name</option>
+                      }
+                    </select>
+
+                    <select class="form-select mb-4" aria-label="Default select example" name="ServiceIdC">
+                      <option selected>Selecione o terceiro serviço</option>
+                      @foreach(var service in ViewBag.Services)
+                      {
+                          <option value="@service.ServiceId">@service.Name</option>
+                      }
+                    </select>
+                </div>
+
+                <div class="col-sm-12 form-group mb-4 text-end mt-5">
+                    <a asp-controller="admin" asp-action="Packets" asp-route-id="" class="btn btn-danger me-3">
+                        <i class="bi bi-x-lg me-2"></i> Cancelar
+                    </a>
+
+                    <button type="submit" class="btn btn-success"><i class="bi bi-save me-2"></i> Salvar</button>
+                </div>
+            </form>
+        </div>
+</section>

@@ -185,6 +185,9 @@
                                         <a asp-controller="admin" asp-action="Usersdelete" asp-route-id="@item.UserId" class="btn btn-sm btn-danger" onclick="return confirm('Essa operação não poderá ser desfeita')">
                                             Excluir
                                         </a>
+                                        <a asp-controller="admin" asp-action="Packets_Users" asp-route-id="@item.UserId" class="btn btn-sm btn-success">
+                                            Pacotes
+                                        </a>
                                     </td>
                                 </tr>
                             }

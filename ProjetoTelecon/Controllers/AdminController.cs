@@ -500,5 +500,212 @@ namespace ProjetoTelecon.Controllers
                 throw;
             }
         }
+
+        /*=========================================================== Packets_Services ===========================================================*/
+
+        public IActionResult Packets_Services()
+        {
+            int id = 0;
+
+            if (RouteData.Values["id"] != null)
+            {
+                id = Convert.ToInt32(RouteData.Values["id"]);
+            }
+
+            ViewBag.Item = new Packets_Services();
+
+            ViewBag.Services = _context.Services.Where(w => w.Active == true).ToList();
+
+            if (id > 0)
+            {
+                var obj = _context.Packets_Services.Where(w => w.Packets_ServicesId == id).SingleOrDefault();
+
+                ViewBag.Item = obj;
+            }
+            else
+            {
+                ViewBag.List = _context.Packets_Services.ToList();
+            }
+
+            var msg = TempData["Msg"];
+            var msgType = TempData["MsgType"];
+            var form = TempData["Form"];
+
+            if (msg != null)
+            {
+                ViewBag.Msg = msg;
+                ViewBag.MsgType = msgType;
+            }
+
+            if (form != null)
+            {
+                ViewBag.Item = !String.IsNullOrEmpty((string)form) ? JsonConvert.DeserializeObject<Packets_Services>((string)form) : null;
+            }
+
+            TempData.Remove("Msg");
+            TempData.Remove("MsgType");
+            TempData.Remove("Form");
+
+            return View();
+        }
+
+        public ActionResult Packets_ServicesAdd(ServicesSelecteds data)
+        {
+            try
+            {
+                var utils = new Utils();
+
+                if (data.ServiceIdA == 0 && data.ServiceIdB == 0)
+                {
+                    TempData["Msg"] = "Pelo menos dois serviços são obrigatorios para montar um pacote!";
+                    TempData["MsgType"] = "danger";
+                    TempData["Form"] = JsonConvert.SerializeObject(data);
+
+                    return RedirectToAction("Packets_Services", "admin", new { id = data.PacketId });
+                }
+
+
+                if(data.ServiceIdA != 0)
+                {
+
+
+                    var packets_services = new Packets_Services()
+                    {
+                        PacketId = data.PacketId,
+                        ServiceId = data.ServiceIdA
+                    };
+
+                    _context.Packets_Services.Add(packets_services);
+                }
+
+                _context.SaveChanges();
+
+                if (data.ServiceIdB != 0)
+                {
+
+
+                    var packets_services = new Packets_Services()
+                    {
+                        PacketId = data.PacketId,
+                        ServiceId = data.ServiceIdB
+                    };
+
+                    _context.Packets_Services.Add(packets_services);
+                }
+
+                _context.SaveChanges();
+
+                if (data.ServiceIdC != 0)
+                {
+
+
+                    var packets_services = new Packets_Services()
+                    {
+                        PacketId = data.PacketId,
+                        ServiceId = data.ServiceIdC,
+                    };
+
+                    _context.Packets_Services.Add(packets_services);
+                }
+
+
+                _context.SaveChanges();
+
+                TempData["MsgType"] = "success";
+
+                return RedirectToAction("packets", "admin");
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
+
+        /*=========================================================== Packets_Users ===========================================================*/
+
+        public IActionResult Packets_Users()
+        {
+            int id = 0;
+
+            if (RouteData.Values["id"] != null)
+            {
+                id = Convert.ToInt32(RouteData.Values["id"]);
+            }
+
+            ViewBag.Item = new Packets_Users();
+
+            ViewBag.Packets = _context.Packets.Where(w => w.Active == true).ToList();
+
+            if (id > 0)
+            {
+                var obj = _context.Packets_Users.Where(w => w.Packets_UsersId == id).SingleOrDefault();
+
+                ViewBag.Item = obj;
+            }
+            else
+            {
+                ViewBag.List = _context.Packets_Users.ToList();
+            }
+
+            var msg = TempData["Msg"];
+            var msgType = TempData["MsgType"];
+            var form = TempData["Form"];
+
+            if (msg != null)
+            {
+                ViewBag.Msg = msg;
+                ViewBag.MsgType = msgType;
+            }
+
+            if (form != null)
+            {
+                ViewBag.Item = !String.IsNullOrEmpty((string)form) ? JsonConvert.DeserializeObject<Packets_Users>((string)form) : null;
+            }
+
+            TempData.Remove("Msg");
+            TempData.Remove("MsgType");
+            TempData.Remove("Form");
+
+            return View();
+        }
+
+        public ActionResult Packets_UsersAdd(Packets_Users data)
+        {
+            try
+            {
+                var utils = new Utils();
+
+                if (data.PacketId == 0 && data.UserId == 0)
+                {
+                    TempData["Msg"] = "Pelo menos dois serviços são obrigatorios para montar um pacote!";
+                    TempData["MsgType"] = "danger";
+                    TempData["Form"] = JsonConvert.SerializeObject(data);
+
+                    return RedirectToAction("Packets_Users", "admin", new { id = data.UserId });
+                }
+
+                var Packets_Users = new Packets_Users()
+                {
+                    UserId = data.UserId,
+                    PacketId = data.PacketId
+                };
+
+                _context.Packets_Users.Add(Packets_Users);
+
+
+                _context.SaveChanges();
+
+                TempData["MsgType"] = "success";
+
+                return RedirectToAction("users", "admin");
+            }
+            catch (Exception error)
+            {
+                throw;
+            }
+        }
     }
+
+    
+    
 }
