@@ -1,0 +1,236 @@
+USE [TeleconSchema]
+GO
+ALTER TABLE [dbo].[Packets_Users] DROP CONSTRAINT [FK_Packets_Users_Users]
+GO
+ALTER TABLE [dbo].[Packets_Users] DROP CONSTRAINT [FK_Packets_Users_Packets]
+GO
+ALTER TABLE [dbo].[Packets_Services] DROP CONSTRAINT [FK_Packets_Services_Services]
+GO
+ALTER TABLE [dbo].[Packets_Services] DROP CONSTRAINT [FK_Packets_Services_Packets]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND type in (N'U'))
+DROP TABLE [dbo].[Users]
+GO
+/****** Object:  Table [dbo].[Services]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Services]') AND type in (N'U'))
+DROP TABLE [dbo].[Services]
+GO
+/****** Object:  Table [dbo].[Packets_Users]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Packets_Users]') AND type in (N'U'))
+DROP TABLE [dbo].[Packets_Users]
+GO
+/****** Object:  Table [dbo].[Packets_Services]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Packets_Services]') AND type in (N'U'))
+DROP TABLE [dbo].[Packets_Services]
+GO
+/****** Object:  Table [dbo].[Packets]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Packets]') AND type in (N'U'))
+DROP TABLE [dbo].[Packets]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 22/06/2022 22:10:37 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__EFMigrationsHistory]') AND type in (N'U'))
+DROP TABLE [dbo].[__EFMigrationsHistory]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Packets]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Packets](
+	[PacketId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](max) NOT NULL,
+	[Price] [float] NOT NULL,
+	[Active] [bit] NOT NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[ModificationDate] [datetime2](7) NULL,
+	[Image] [varchar](255) NULL,
+ CONSTRAINT [PK_Packet] PRIMARY KEY CLUSTERED 
+(
+	[PacketId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Packets_Services]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Packets_Services](
+	[Packets_ServicesId] [int] IDENTITY(1,1) NOT NULL,
+	[PacketId] [int] NOT NULL,
+	[ServiceId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Packets_ServicesId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Packets_Users]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Packets_Users](
+	[Packets_UsersId] [int] IDENTITY(1,1) NOT NULL,
+	[PacketId] [int] NOT NULL,
+	[UserId] [int] NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Services]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Services](
+	[ServiceId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](255) NOT NULL,
+	[Price] [float] NOT NULL,
+	[Franchise] [int] NULL,
+	[ExtraFranchise] [int] NULL,
+	[ServiceType] [varchar](255) NULL,
+	[Active] [bit] NOT NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[ModificationDate] [datetime2](7) NULL,
+	[Image] [varchar](255) NULL,
+ CONSTRAINT [PK_Services] PRIMARY KEY CLUSTERED 
+(
+	[ServiceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 22/06/2022 22:10:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](max) NOT NULL,
+	[Email] [varchar](255) NULL,
+	[Age] [int] NULL,
+	[Password] [varchar](255) NOT NULL,
+	[CPF] [varchar](255) NULL,
+	[Balance] [varchar](255) NULL,
+	[PhoneNumber] [varchar](255) NULL,
+	[IsAdmin] [bit] NOT NULL,
+	[Active] [bit] NOT NULL,
+	[CreationDate] [datetime2](7) NOT NULL,
+	[ModificationDate] [datetime2](7) NULL,
+	[Image] [varchar](255) NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20220605010232_Inicial-criacao', N'6.0.5')
+GO
+SET IDENTITY_INSERT [dbo].[Packets] ON 
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (3, N'Internet + Streamings', 0, 1, CAST(N'2022-06-19T18:02:59.0955363' AS DateTime2), CAST(N'2022-06-19T18:03:19.3238068' AS DateTime2), N'Packets_caeb668c-1707-44ad-88f6-c7c782415b9e.webp')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (4, N'TV a cabo + Streamings e mais', 0, 1, CAST(N'2022-06-19T18:03:47.6474906' AS DateTime2), NULL, N'Packets_45148fae-adf2-46f5-84dc-4c2ba1459f4f.jpg')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (5, N'Internet Móvel + Fibra ilimitada', 0, 1, CAST(N'2022-06-19T18:04:25.5922422' AS DateTime2), NULL, N'Packets_3dfd68a5-d37b-484f-83d2-8e117fc2bcab.jpg')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (6, N'Banda larga', 0, 1, CAST(N'2022-06-19T18:04:55.4067259' AS DateTime2), NULL, N'Packets_f1fec6c6-ecf2-40be-9e9c-3067ad1a88aa.png')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (7, N'Internet Fibra + Streaming De sua escolha Gratuito', 0, 1, CAST(N'2022-06-19T18:06:02.8782409' AS DateTime2), NULL, N'Packets_dea3914a-7737-4811-a2b4-9d6203837fa4.webp')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (8, N'TV a cabo', 0, 0, CAST(N'2022-06-19T18:06:15.9911057' AS DateTime2), NULL, NULL)
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (9, N'Streaming de Filmes por demanda', 0, 1, CAST(N'2022-06-19T18:07:04.0836879' AS DateTime2), NULL, N'Packets_6839cad6-1fd5-4aeb-8372-de0a67cb8e3a.webp')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (10, N'Serviços Ilimitados d+', 0, 1, CAST(N'2022-06-20T21:42:31.3681064' AS DateTime2), NULL, N'Packets_87307304-f03b-4e71-ba01-8dfc99496ca6.jpg')
+GO
+INSERT [dbo].[Packets] ([PacketId], [Name], [Price], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (11, N'TV + Internet + Streaming ++', 0, 1, CAST(N'2022-06-20T21:43:30.9317080' AS DateTime2), NULL, N'Packets_f1f6493c-4266-415b-8a94-017421f66b96.webp')
+GO
+SET IDENTITY_INSERT [dbo].[Packets] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Packets_Services] ON 
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (1, 9, 11)
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (2, 9, 9)
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (3, 9, 3)
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (4, 9, 9)
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (5, 9, 3)
+GO
+INSERT [dbo].[Packets_Services] ([Packets_ServicesId], [PacketId], [ServiceId]) VALUES (6, 9, 10)
+GO
+SET IDENTITY_INSERT [dbo].[Packets_Services] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Packets_Users] ON 
+GO
+INSERT [dbo].[Packets_Users] ([Packets_UsersId], [PacketId], [UserId]) VALUES (1, 7, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Packets_Users] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Services] ON 
+GO
+INSERT [dbo].[Services] ([ServiceId], [Name], [Price], [Franchise], [ExtraFranchise], [ServiceType], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (1, N'Serviço 1', 55, 100, 15, N'Basico', 1, CAST(N'2022-06-14T10:54:58.4240173' AS DateTime2), CAST(N'2022-06-14T11:23:56.6369551' AS DateTime2), NULL)
+GO
+INSERT [dbo].[Services] ([ServiceId], [Name], [Price], [Franchise], [ExtraFranchise], [ServiceType], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (3, N'Telefone', 150, 6, 2, N'Basico', 1, CAST(N'2022-06-16T01:47:13.7583500' AS DateTime2), CAST(N'2022-06-16T14:52:24.9334710' AS DateTime2), N'Service_0d53a18d-f4ff-4879-9977-ecb82a3bc60f.jpg')
+GO
+INSERT [dbo].[Services] ([ServiceId], [Name], [Price], [Franchise], [ExtraFranchise], [ServiceType], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (9, N'Streaming de Filmes', 0, NULL, NULL, NULL, 1, CAST(N'2022-06-20T18:52:06.0758525' AS DateTime2), CAST(N'2022-06-20T18:52:12.8181706' AS DateTime2), N'Services_6d52d7e4-7b7b-4ff2-a245-9036d75ed53e.webp')
+GO
+INSERT [dbo].[Services] ([ServiceId], [Name], [Price], [Franchise], [ExtraFranchise], [ServiceType], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (10, N'Telefone Movel', 0, NULL, NULL, NULL, 1, CAST(N'2022-06-20T18:52:28.6082521' AS DateTime2), NULL, NULL)
+GO
+INSERT [dbo].[Services] ([ServiceId], [Name], [Price], [Franchise], [ExtraFranchise], [ServiceType], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (11, N'Internet Fibra', 0, NULL, NULL, N'Basico', 1, CAST(N'2022-06-20T18:52:39.6195744' AS DateTime2), NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Services] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([UserId], [Name], [Email], [Age], [Password], [CPF], [Balance], [PhoneNumber], [IsAdmin], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (1, N'Leonardo Melo', N'Leonardo.m.contato@hotmail.com', 19, N'123', N'343gsdfghg', NULL, NULL, 1, 1, CAST(N'2022-06-16T14:16:22.5632219' AS DateTime2), CAST(N'2022-06-16T14:17:18.9312807' AS DateTime2), N'Users_959a2032-c964-4c14-846f-7eb0d5b4f07f.jpg')
+GO
+INSERT [dbo].[Users] ([UserId], [Name], [Email], [Age], [Password], [CPF], [Balance], [PhoneNumber], [IsAdmin], [Active], [CreationDate], [ModificationDate], [Image]) VALUES (2, N'Marcelo Oliveira', N'marcelo@marcelo.com', NULL, N'321', NULL, NULL, NULL, 0, 1, CAST(N'2022-06-16T18:22:42.4931780' AS DateTime2), CAST(N'2022-06-20T20:43:54.5862710' AS DateTime2), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+ALTER TABLE [dbo].[Packets_Services]  WITH CHECK ADD  CONSTRAINT [FK_Packets_Services_Packets] FOREIGN KEY([PacketId])
+REFERENCES [dbo].[Packets] ([PacketId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Packets_Services] CHECK CONSTRAINT [FK_Packets_Services_Packets]
+GO
+ALTER TABLE [dbo].[Packets_Services]  WITH CHECK ADD  CONSTRAINT [FK_Packets_Services_Services] FOREIGN KEY([ServiceId])
+REFERENCES [dbo].[Services] ([ServiceId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Packets_Services] CHECK CONSTRAINT [FK_Packets_Services_Services]
+GO
+ALTER TABLE [dbo].[Packets_Users]  WITH CHECK ADD  CONSTRAINT [FK_Packets_Users_Packets] FOREIGN KEY([PacketId])
+REFERENCES [dbo].[Packets] ([PacketId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Packets_Users] CHECK CONSTRAINT [FK_Packets_Users_Packets]
+GO
+ALTER TABLE [dbo].[Packets_Users]  WITH CHECK ADD  CONSTRAINT [FK_Packets_Users_Users] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([UserId])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Packets_Users] CHECK CONSTRAINT [FK_Packets_Users_Users]
+GO
