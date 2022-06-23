@@ -684,16 +684,30 @@ namespace ProjetoTelecon.Controllers
                     return RedirectToAction("Packets_Users", "admin", new { id = data.UserId });
                 }
 
-                var Packets_Users = new Packets_Users()
+                var user = _context.Users.Where(w => w.UserId == data.UserId).SingleOrDefault();
+
+                var packet = _context.Packets.Where(w => w.PacketId == data.PacketId).SingleOrDefault();
+
+                if(user.Balance >= packet.Price)
                 {
-                    UserId = data.UserId,
-                    PacketId = data.PacketId
-                };
+                    var Packets_Users = new Packets_Users()
+                    {
+                        UserId = data.UserId,
+                        PacketId = data.PacketId
+                    };
 
-                _context.Packets_Users.Add(Packets_Users);
+                    user.Balance -= packet.Price;
+
+                    _context.Packets_Users.Add(Packets_Users);
 
 
-                _context.SaveChanges();
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    ViewBag.Msg = "Este usuário não tem saldo o suficiente";
+                }
+                
 
                 TempData["MsgType"] = "success";
 
